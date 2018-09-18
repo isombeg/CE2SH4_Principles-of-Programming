@@ -83,7 +83,7 @@ void q4(void){
 }
 
 
-void q5(void){ //FIX ME!!!
+void q5(void){
     float avg;
 
     printf("Please input student average: ");
@@ -171,18 +171,122 @@ void q8(void){
     for (int i = 1; i <= m; i++){
         for (int n = 1, sum = 0; n < i; n++){
 
-            if (i % n == 0){
+            if (i % n == 0)
                 sum += n;
-            }
 
             if (n == i - 1 && sum == i)
-                printf("%d, ", n);
+                printf("%d, ", i);
 
         }
 
     }
 
     printf("\n");
+
+}
+
+void q9a(void){
+    int lineAmt;
+
+    // Prompting user
+    printf("Please input integer: ");
+    scanf("%d", &lineAmt);
+
+    int colAmt = 2 * lineAmt - 1;
+
+    for (int row = 0; row < lineAmt; row++){ //Outer loop takes care of the amount of lines
+
+        for(int colNum = 0; colNum < colAmt; colNum++){ //Inner loop takes care of column
+            printf("*");
+        }
+
+        printf("\n");
+    }
+}
+
+void q9b(void){
+    int lineAmt;
+
+    // Prompting user
+    printf("Please input integer: ");
+    scanf("%d", &lineAmt);
+
+    int colAmt = 2 * lineAmt - 1, spaceAmt = lineAmt;
+
+    for (int row = 0; row < lineAmt; row++){ //Outer loop takes care of the amount of lines
+
+        spaceAmt--;
+
+        for(int colNum = 0; colNum < colAmt; colNum++){ //Inner loop takes care of column
+
+            if ((colNum + 1) > spaceAmt && colNum < (colAmt - spaceAmt)){
+                printf("*");
+            }
+
+            else{
+                printf(" ");
+            }
+
+        }
+
+        printf("\n");
+    }
+}
+
+void q9c(void){
+    int lineAmt, spaceAmt = -2;
+
+    // Prompting user
+    printf("Please input integer: ");
+    scanf("%d", &lineAmt);
+
+    int colAmt = 2 * lineAmt - 1;
+
+    for (int row = 0; row < lineAmt; row++){ //Outer loop takes care of the amount of lines
+
+        spaceAmt += 2;
+
+        for(int colNum = 0; colNum < colAmt; colNum++){ //Inner loop takes care of column
+
+            if (colNum >= colAmt - spaceAmt){
+                printf(" ");
+            }
+
+            else{
+                printf("*");
+            }
+
+        }
+
+        printf("\n");
+    }
+}
+
+void q9d(void){
+
+
+}
+
+void q10(void){
+    int n, div = 1, counter = 1;
+
+    //Prompting user
+    printf("Please input integer: ");
+    scanf("%d", &n);
+
+    if(n - 10 < 0)
+        printf("Your number has 1 digit\n");
+
+    else{
+        do{
+            counter++;
+            div *= 10;
+            printf("div: %d \t n % div: %d \n", div, (n%div));
+
+        }while((n%div) != 0);
+
+        printf("Your number has %d digits\n", counter);
+    }
 
 }
 
@@ -213,6 +317,6 @@ long q13_a(void){ //FIX ME!!
 // executions
 
 int main(void){
-    q8();
+    q10();
     return 0;
 }
