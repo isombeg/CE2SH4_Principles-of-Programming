@@ -4,6 +4,14 @@ int squareInt(int num){
     return num * num;
 }
 
+int power(int base, int exp){
+    for (int i = 0; i < exp - 1; i++){
+        base *= base;
+    }
+
+    return base;
+}
+
 int q1_a(void){
     int total = 0;
     for (int num = 30; num <= 1000; num + 4){
@@ -262,13 +270,14 @@ void q9c(void){
     }
 }
 
+
 void q9d(void){
 
 
 }
 
-void q10(void){
-    int n, div = 1, counter = 1;
+void q10(void){ //FIX ME
+    int n, quot = 1, counter = 0;
 
     //Prompting user
     printf("Please input integer: ");
@@ -280,14 +289,43 @@ void q10(void){
     else{
         do{
             counter++;
-            div *= 10;
-            printf("div: %d \t n % div: %d \n", div, (n%div));
+            quot *= 10;
 
-        }while((n%div) != 0);
+        }while(n%quot != n);
 
         printf("Your number has %d digits\n", counter);
     }
 
+void q11a(void){
+    int num, backNum, digAmnt = 0, quot = 1;
+
+    //Prompting user for int
+    printf("Please input integer: ");
+    scanf("%d", &num);
+
+    if(num - 10 < 0)
+        digAmnt++;
+
+    else{
+        do{
+            digAmnt++;
+            quot *= 10;
+
+        }while(num%quot != num);
+
+    }
+
+    for (int i = digAmnt; i > 0; i--){
+        backNum += num % power(10, i - 1);
+
+        if (i = 1)
+            continue;
+
+        else
+            backNum *= 10;
+    }
+
+    printf("%d \n", backNum);
 }
 
 long q13_a(void){ //FIX ME!!
@@ -309,14 +347,9 @@ long q13_a(void){ //FIX ME!!
     return prod;
 }
 
-
-
-
-
-
 // executions
 
 int main(void){
-    q10();
+    q11a();
     return 0;
 }
