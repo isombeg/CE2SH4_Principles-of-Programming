@@ -270,13 +270,14 @@ void q9c(void){
     }
 }
 
-
+/*
 void q9d(void){
 
 
 }
+*/
 
-void q10(void){ //FIX ME
+void q10(void){
     int n, quot = 1, counter = 0;
 
     //Prompting user
@@ -295,37 +296,68 @@ void q10(void){ //FIX ME
 
         printf("Your number has %d digits\n", counter);
     }
+}
 
-void q11a(void){
-    int num, backNum, digAmnt = 0, quot = 1;
+void q11b(void){
+    int n, counter, backNum = 0;
 
-    //Prompting user for int
-    printf("Please input integer: ");
-    scanf("%d", &num);
+    //Prompting user
+    printf("Please input binary integer: ");
+    scanf("%d", &n);
 
-    if(num - 10 < 0)
-        digAmnt++;
+    //Processing
+    while(n != 0){
+        counter = 0;
+        backNum *= 10;
 
-    else{
-        do{
-            digAmnt++;
-            quot *= 10;
-
-        }while(num%quot != num);
-
-    }
-
-    for (int i = digAmnt; i > 0; i--){
-        backNum += num % power(10, i - 1);
-
-        if (i = 1)
+        if(n % 10 == 0){
             continue;
+        }
 
-        else
-            backNum *= 10;
+        else{
+            do{
+                n--;
+                counter++;
+            }while(n % 10 != 0);
+        }
+
+        backNum += counter;
+        n = n / 10;
     }
 
-    printf("%d \n", backNum);
+    printf("backward integer: %d", backNum);
+}
+
+void q12(void){
+    int n, counter, addOn, digNum = 0, decNum = 0;
+
+    //Prompting user
+    printf("Please input binary integer: ");
+    scanf("%d", &n);
+
+    //Processing
+    do{
+        n = (digNum != 0) ? n / 10 : n;
+        digNum++;
+        addOn = 1;
+
+        if(n % 10 == 0){
+            continue;
+        }
+
+        else{
+
+            for(int i = 0; i < digNum - 1; i++){
+                addOn *= 2;
+            }
+        }
+
+        decNum += addOn;
+
+    }while (n != 0);
+
+    printf("decimal number: %d\n", decNum);
+
 }
 
 long q13_a(void){ //FIX ME!!
@@ -347,9 +379,14 @@ long q13_a(void){ //FIX ME!!
     return prod;
 }
 
+void q14(void){
+    int num;
+}
+
+
 // executions
 
 int main(void){
-    q11a();
+    q12();
     return 0;
 }
