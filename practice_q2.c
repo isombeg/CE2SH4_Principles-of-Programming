@@ -1,14 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 //Constants
-#define N 3
+#define N 5
 
-//Initialization of test arrays
+//Necessary elements
+int freq[26];
+
+//Initialization of test elements
 
     //Matrices
 int intMtrx1[4][4] = {5,2,2,3,6,8,1,2,2,3,88,29,2,5,99,103};
 int intMtrx2[3][3] = {1,34,5,2,5,3,3,6,8};
+int intMtrx3[4][5] = {9,2,1,0,4,7,9,2,1,0,3,7,9,2,1,5,3,7,9,2};
 
     //Integer arrays
 int intArray1[8] = {1,5,8,11,65,99,130,934};
@@ -31,28 +36,40 @@ void print_vector(double array[], int size);
 void add_vectors(double vector1[], double vector2[], double vector3[], int n);
 double scalar_prod(double vector1[], double vector2[], int n);
 
-void isSorted(int array[], int size); //Question 2
+    //Question 2
+void isSorted(int array[], int size);
 
-void int_freq(int array[], int num, int size); //Question 3
+    //Question 3
+void int_freq(int array[], int num, int size);
 
-void change(int x[], int n); //Question 4
+    //Question 4
+void change(int x[], int n);
 
     //Question 5
 int is_diag_dom( int mat[ ][N]);
 
+    //Question 6
+void print_diag_scan(int mat[ ][N]);
+
+    //Question 7
+int is_toeplitz(int a[][N], int m);
+
+    //Question 8
+void letter_freq(const char word[], int freq[]);
+
+    //Question 9
 
 
 
 
-
-//MAIN (for testing functions)
+//MAIN (for testing functions)____________________________________________________________________________________
 int main(void){
-    printf("%d \n", is_diag_dom(intMtrx2));
+    letter_freq("my name is GJ. I'm sitting next to Arya and Christine at Mills Memorial Library", freq);
 
     return 0;
 }
 
-
+//________________________________________________________________________________________________________________
 
 
 
@@ -168,7 +185,7 @@ int is_diag_dom( int mat[ ][N]){
 
         for(int colNum = 0; colNum < N; colNum++){
 
-            if(&(mat[rowNum][rowNum]) != &(mat[rowNum][colNum]) && mat[rowNum][rowNum] < mat[rowNum][colNum]){
+            if(&(mat[rowNum][rowNum]) != &(mat[rowNum][colNum]) && fabs(mat[rowNum][rowNum]) < fabs(mat[rowNum][colNum])){
                 return 0;
             }
         }
@@ -177,3 +194,56 @@ int is_diag_dom( int mat[ ][N]){
     return 1;
 }
 
+    //Question 6
+void print_diag_scan(int mat[ ][N]){
+    int iterMax = 2*N - 1; //Number of outer iterations,
+
+    //Printing top diagonal half and diagonal
+    for(int i = 0, rowNum = 0; i < N; i++, rowNum = i){
+
+        for(int colNum = 0; rowNum >= 0; rowNum--, colNum++){
+            printf("%d ", mat[rowNum][colNum]);
+        }
+    }
+
+    //Printing bottom diagonal half
+    for(int i = N, colNum = 1; i < iterMax; i++, colNum = i - N + 1){
+
+        for(int rowNum = N - 1; colNum < N; colNum++, rowNum--){
+            printf("%d ", mat[rowNum][colNum]);
+        }
+
+    }
+}
+
+    //Question 7
+int is_toeplitz(int a[][N], int m){
+
+    for(int rowNum = 0; rowNum < m - 1; rowNum++){
+
+        for(int colNum = 0; colNum < N - 1; colNum++){
+            if(a[rowNum][colNum] != a[rowNum + 1][colNum + 1]){ //if element to bottom right does not match
+                return 0; //return 0 and break whole function if mtrx is not toeplitz
+            }
+        }
+    }
+
+    return 1; //return 1 if mtrx is toeplitz
+}
+
+    //Question 8
+void letter_freq(const char word[], int freq[]){
+    int iterMax = strlen(word);
+
+    for(int charNum = 0; charNum < iterMax; charNum++){
+
+        if(isalpha(word[charNum]) != 0){
+            (freq[isupper(word[charNum]) != 0 ? word[charNum] - 65 : word[charNum] - 97])++;
+        }
+    }
+
+    for(int alphaNum = 0; alphaNum < 26; alphaNum++){
+        printf("The count of '%c' and '%c' is %d \n", alphaNum + 65, alphaNum + 97, freq[alphaNum]);
+    }
+
+}
