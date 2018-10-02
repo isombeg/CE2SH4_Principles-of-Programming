@@ -3,7 +3,12 @@
 #include <math.h>
 
 //Constants
-#define N 5
+#define N 4
+
+#define ascii_A 65
+#define ascii_Z 90
+#define ascii_a 97
+#define ascii_z 122
 
 //Necessary elements
 int freq[26];
@@ -14,6 +19,9 @@ int freq[26];
 int intMtrx1[4][4] = {5,2,2,3,6,8,1,2,2,3,88,29,2,5,99,103};
 int intMtrx2[3][3] = {1,34,5,2,5,3,3,6,8};
 int intMtrx3[4][5] = {9,2,1,0,4,7,9,2,1,0,3,7,9,2,1,5,3,7,9,2};
+int intMtrx4[4][4] = {9,1,2,3,1,8,2,3,1,2,10,3,1,2,3,11};
+int intMtrx5[4][4] = {9,1,2,3,1,2,2,3,1,2,10,3,1,2,3,11};
+int intMtrx6[4][4] = {9,-1,-2,-3,1,8,2,3,1,2,10,3,1,2,3,-11};
 
     //Integer arrays
 int intArray1[8] = {1,5,8,11,65,99,130,934};
@@ -28,6 +36,13 @@ double lfArray1[4] = {3.4,5.7,3.5,0.3};
 double lfArray2[4] = {8.33, 9.24, 1.11, 49.878};
 
 double lfArray3[8] = {4.2,6.7,3.2,9.2,993.554,43.44,9.3,2.22};
+
+    //Strings
+char str1[];
+char str2[5];
+char str3[2];
+char str4[10];
+
 
 //Function prototypes
 
@@ -58,13 +73,18 @@ int is_toeplitz(int a[][N], int m);
 void letter_freq(const char word[], int freq[]);
 
     //Question 9
+void string_copy(const char source[], char destination[], int n);
 
+    //Question 10
+void my_strcat(const char str1[], const char str2[], char str3[], int n);
 
+    //Question 11
+int my_strcomp(const char str1[], const char str2[]);
 
 
 //MAIN (for testing functions)____________________________________________________________________________________
 int main(void){
-    letter_freq("my name is GJ. I'm sitting next to Arya and Christine at Mills Memorial Library", freq);
+    printf("%d \n", my_strcomp("vijay", "shreyal"));
 
     return 0;
 }
@@ -180,14 +200,19 @@ void change(int x[], int n){
 
     //Question 5
 int is_diag_dom( int mat[ ][N]){
+    int sum;
 
-    for(int rowNum = 0; rowNum < N; rowNum++){
+    for(int rowNum = 0, sum = 0; rowNum < N; rowNum++, sum = 0){
 
         for(int colNum = 0; colNum < N; colNum++){
 
-            if(&(mat[rowNum][rowNum]) != &(mat[rowNum][colNum]) && fabs(mat[rowNum][rowNum]) < fabs(mat[rowNum][colNum])){
-                return 0;
+            if(rowNum != colNum){
+                sum += mat[rowNum][colNum];
             }
+        }
+
+        if(fabs(sum) > fabs(mat[rowNum][rowNum])){
+            return 0;
         }
     }
 
@@ -233,17 +258,72 @@ int is_toeplitz(int a[][N], int m){
 
     //Question 8
 void letter_freq(const char word[], int freq[]){
-    int iterMax = strlen(word);
 
-    for(int charNum = 0; charNum < iterMax; charNum++){
+    for(int charNum = 0; word[charNum] != '\0'; charNum++){
 
-        if(isalpha(word[charNum]) != 0){
-            (freq[isupper(word[charNum]) != 0 ? word[charNum] - 65 : word[charNum] - 97])++;
+        printf("%c", word[charNum]);
+        if((word[charNum] > ascii_A && word[charNum] < ascii_Z) || (word[charNum] > ascii_a && word[charNum] < ascii_z)){
+            (freq[word[charNum] > ascii_A && word[charNum] < ascii_Z != 0 ? word[charNum] - 65 : word[charNum] - 97])++;
         }
     }
 
     for(int alphaNum = 0; alphaNum < 26; alphaNum++){
         printf("The count of '%c' and '%c' is %d \n", alphaNum + 65, alphaNum + 97, freq[alphaNum]);
     }
+
+}
+
+    //Question 9
+
+/*For this function, we're assuming that the person using it inputs the correct n */
+void string_copy(const char source[], char destination[], int n){
+
+    for(int indexNum = 0; indexNum < n; indexNum++){
+        destination[indexNum] = source[indexNum];
+    }
+
+}
+
+    //Question 10
+
+/*For this function, we're assuming that the person using it inputs the correct n */
+void my_strcat(const char str1[], const char str2[], char str3[], int n){ //FIX ME!!
+    int i = 0, j = 0;
+
+    while(str1[i] != '\0' && i + j < n){
+        str3[i] = str1[i];
+        i++;
+    }
+
+    while(str2[j] != '\0' && i + j < n){
+        str3[i+j] = str2[j];
+        j++;
+    }
+
+    if(i + j > n){
+        printf("Error: not enough memory is being allocated for concatenated string.\n");
+        i = 0;
+
+        while(str3[i] != '\0'){
+            str3[i] = ' ';
+            i++;
+        }
+    }
+
+}
+
+    //Question 11
+int my_strcomp(const char str1[], const char str2[]){ //INCOMPLETE
+    int indexNum = 0;
+
+    for(indexNum = 0; str1[indexNum] != '0'; indexNum++){
+        if((str1[indexNum] > ascii_A && str1[indexNum] < ascii_Z != 0 ? str1[indexNum] - 65 : str1[indexNum] - 97) < (str2[indexNum] > ascii_A && str2[charNum] < ascii_Z != 0 ? str2[charNum] - 65 : str2[charNum] - 97))
+            return -1;
+
+        else if((str1[charNum] > ascii_A && str1[charNum] < ascii_Z != 0 ? str1[charNum] - 65 : str1[charNum] - 97) > (str2[charNum] > ascii_A && str2[charNum] < ascii_Z != 0 ? str2[charNum] - 65 : str2[charNum] - 97))
+            return 1;
+    }
+
+    return 0;
 
 }
