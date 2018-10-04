@@ -81,10 +81,16 @@ void my_strcat(const char str1[], const char str2[], char str3[], int n);
     //Question 11
 int my_strcomp(const char str1[], const char str2[]);
 
+    //Question 12
+int isPrefix(const char str1[], const char str2[]);
+
+    //Question 13
+void efficient( const int source[], int val[], int pos[], int size);
+
 
 //MAIN (for testing functions)____________________________________________________________________________________
 int main(void){
-    printf("%d \n", my_strcomp("vijay", "shreyal"));
+    printf("rslt: %d", isPrefix("vijay", "VI"));
 
     return 0;
 }
@@ -261,9 +267,8 @@ void letter_freq(const char word[], int freq[]){
 
     for(int charNum = 0; word[charNum] != '\0'; charNum++){
 
-        printf("%c", word[charNum]);
-        if((word[charNum] > ascii_A && word[charNum] < ascii_Z) || (word[charNum] > ascii_a && word[charNum] < ascii_z)){
-            (freq[word[charNum] > ascii_A && word[charNum] < ascii_Z != 0 ? word[charNum] - 65 : word[charNum] - 97])++;
+        if((word[charNum] >= ascii_A && word[charNum] <= ascii_Z) || (word[charNum] >= ascii_a && word[charNum] <= ascii_z)){
+            (freq[word[charNum] >= ascii_A && word[charNum] <= ascii_Z != 0 ? word[charNum] - 65 : word[charNum] - 97])++;
         }
     }
 
@@ -284,10 +289,10 @@ void string_copy(const char source[], char destination[], int n){
 
 }
 
-    //Question 10
+    //Question 10: FIX ME!!
 
 /*For this function, we're assuming that the person using it inputs the correct n */
-void my_strcat(const char str1[], const char str2[], char str3[], int n){ //FIX ME!!
+void my_strcat(const char str1[], const char str2[], char str3[], int n){
     int i = 0, j = 0;
 
     while(str1[i] != '\0' && i + j < n){
@@ -312,18 +317,53 @@ void my_strcat(const char str1[], const char str2[], char str3[], int n){ //FIX 
 
 }
 
-    //Question 11
-int my_strcomp(const char str1[], const char str2[]){ //INCOMPLETE
-    int indexNum = 0;
+    //Question 11 -- INCOMPLETE: can't determine if string are identical
 
-    for(indexNum = 0; str1[indexNum] != '0'; indexNum++){
-        if((str1[indexNum] > ascii_A && str1[indexNum] < ascii_Z != 0 ? str1[indexNum] - 65 : str1[indexNum] - 97) < (str2[indexNum] > ascii_A && str2[charNum] < ascii_Z != 0 ? str2[charNum] - 65 : str2[charNum] - 97))
-            return -1;
+/*Prepared assuming only alphabetical characters will be used.
+Question doesn't specify precedence for non-alphabetical characters*/
 
-        else if((str1[charNum] > ascii_A && str1[charNum] < ascii_Z != 0 ? str1[charNum] - 65 : str1[charNum] - 97) > (str2[charNum] > ascii_A && str2[charNum] < ascii_Z != 0 ? str2[charNum] - 65 : str2[charNum] - 97))
-            return 1;
+int my_strcomp(const char str1[], const char str2[]){
+    int indexNum;
+
+    if(*str1 == *str2)
+        return 0;
+
+    for(indexNum = 0; str1[indexNum] != '\0' && str2[indexNum] != '\0'; indexNum++){
+
+        if(str1[indexNum] != str2[indexNum]){
+            return (str1[indexNum] >= 'a' ? str1[indexNum] - 'a' : str1[indexNum] - 'A') - (str2[indexNum] >= 'a' ? str2[indexNum] - 'a' : str2[indexNum] - 'A') > 0 ? -1 : 1;
+        }
+
     }
 
-    return 0;
+    return (str1[indexNum] >= 'a' ? str1[indexNum] - 'a' : str1[indexNum] - 'A') - (str2[indexNum] >= 'a' ? str2[indexNum] - 'a' : str2[indexNum] - 'A') > 0 ? -1 : 1;;
 
 }
+
+    //Question 12
+int isPrefix(const char str1[], const char str2[]){
+    int indexNum, counter = 0;
+
+    for(indexNum = 0; str1[indexNum] != '\0' && str2[indexNum] != '\0'; ++indexNum){
+        counter = (str1[indexNum] >= 'a' ? str1[indexNum] - 'a' : str1[indexNum] - 'A') == (str2[indexNum] >= 'a' ? str2[indexNum] - 'a' : str2[indexNum] - 'A') ? counter + 1 : counter;
+    }
+
+    printf("indexNum: %d, counter: %d \n", indexNum, counter);
+    return (str1[indexNum] == '\0' && counter == indexNum) ? 1 : 0;
+
+}
+
+    //Question 13
+void efficient( const int source[], int val[], int pos[], int size){
+
+    for (int index1 = 0, index2 = 0; index1 < size; index1++){
+
+        if(source[indexNum] != 0){
+            val[index2] = source[index1];
+            pos[index2] = index1;
+            index1++;
+        }
+
+    }
+}
+
