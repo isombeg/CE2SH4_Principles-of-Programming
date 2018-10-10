@@ -3,7 +3,7 @@
 #include <math.h>
 
 //Constants
-#define N 4
+#define N 12
 
 #define ascii_A 65
 #define ascii_Z 90
@@ -37,12 +37,25 @@ double lfArray2[4] = {8.33, 9.24, 1.11, 49.878};
 
 double lfArray3[8] = {4.2,6.7,3.2,9.2,993.554,43.44,9.3,2.22};
 
+    //Vectors for q13
+int sourceV1[5] = {3,0,0,2,0};
+int sourceV2[8] = {2,3,4,0,0,0,-4,100};
+int sourceV3[14] = {100,100,-100,2,4,0,0,0,0,0,0,0,44,1};
+int pos[N] = {0}, val[N] = {0};
+
+int posV1[3] = {2,5,6}, valV1[3] = {1,2,3};
+int posV2[5] = {1,4,7,8,10}, valV2[5] = {1,2,3,4,5};
+int sourceV[N] = {0};
+
     //Strings
 char str1[];
 char str2[5];
 char str3[2];
 char str4[10];
 
+
+//Useful functions for testing
+void print_int_array(const int arr[], int size);
 
 //Function prototypes
 
@@ -86,11 +99,19 @@ int isPrefix(const char str1[], const char str2[]);
 
     //Question 13
 void efficient( const int source[], int val[], int pos[], int size);
+void reconstruct(int source[], int m, const int val[], const int pos[], int n);
 
+    //Question 14
+void addEff(int val1[], int val2[], int val3[], int pos1[], int pos2[], int pos3[], int k1, int k2);
 
 //MAIN (for testing functions)____________________________________________________________________________________
 int main(void){
-    printf("rslt: %d", isPrefix("vijay", "VI"));
+    print_int_array(posV2,5);
+    print_int_array(valV2,5);
+
+    reconstruct(sourceV, N, valV2, posV2, 5);
+
+    print_int_array(sourceV,N);
 
     return 0;
 }
@@ -98,7 +119,14 @@ int main(void){
 //________________________________________________________________________________________________________________
 
 
+//Useful function for testing
 
+void print_int_array(const int arr[], int size){
+
+    for(int indexNum = 0; indexNum < size; indexNum++)
+        indexNum == size - 1 ? printf("%d\n", arr[indexNum]) : printf("%d, ", arr[indexNum]);
+
+}
 
 //QUESTION Answers
 
@@ -107,11 +135,9 @@ int main(void){
 void print_vector(double array[], int size){
 
     //For loop prints vector entries from first from second last
-    for (int indexNum = 0; indexNum < size - 1; indexNum++){
-        printf("%lf, ", array[indexNum]);
-    }
-
-    printf("%lf \n", array[size - 1]); //statement prints vector's last entry without comma
+    for(int indexNum = 0; indexNum < size; indexNum++)
+        //print element followed by comma and space unless it's the last element, in which case a new line follows
+        indexNum == size - 1 ? printf("%lf\n", array[indexNum]) : printf("%lf, ", array[indexNum]);
 
 }
 
@@ -356,14 +382,37 @@ int isPrefix(const char str1[], const char str2[]){
     //Question 13
 void efficient( const int source[], int val[], int pos[], int size){
 
-    for (int index1 = 0, index2 = 0; index1 < size; index1++){
+    for(int index1 = 0, index2 = 0; index2 < size; index1++){
 
-        if(source[indexNum] != 0){
+        if(source[index1] != 0){
             val[index2] = source[index1];
-            pos[index2] = index1;
-            index1++;
+            pos[index2++] = index1;
         }
-
     }
 }
 
+void reconstruct(int source[], int m, const int val[], const int pos[], int n){
+
+    for(int indexNum1 = 0, indexNum2 = 0; indexNum1 < m; indexNum1++)
+
+        //element of source at indexNum1 becomes element of val at indexNum2 if indexNum1 equals 1, otherwise it becomes 0
+        source[indexNum1] = (indexNum1 == pos[indexNum2]) ? val[indexNum2++] : 0;
+
+}
+
+    //Question 14
+void addEff(int val1[], int val2[], int val3[], int pos1[], int pos2[], int pos3[], int k1, int k2){
+
+    //Copying elements from val1 and pos1 into val3 and pos3
+    for(int indexNum = 0; indexNum < k1; indexNum++){
+        val3[indexNum] = val1[indexNum];
+        pos3[indexNum] = pos1[indexNum];
+    }
+
+    //Copying elements from val2 and pos2 into val3 and pos3
+    for(int indexNum = k1; indexNum < k2; indexNum++){
+        val3[indexNum] = val2[indexNum];
+        pos3[indexNum] = pos2[indexNum];
+    }
+
+}
