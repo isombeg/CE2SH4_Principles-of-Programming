@@ -106,12 +106,7 @@ void addEff(int val1[], int val2[], int val3[], int pos1[], int pos2[], int pos3
 
 //MAIN (for testing functions)____________________________________________________________________________________
 int main(void){
-    print_int_array(posV2,5);
-    print_int_array(valV2,5);
-
-    reconstruct(sourceV, N, valV2, posV2, 5);
-
-    print_int_array(sourceV,N);
+    printf("Rslt: %d\n", my_strcomp("am", "am"));
 
     return 0;
 }
@@ -343,26 +338,24 @@ void my_strcat(const char str1[], const char str2[], char str3[], int n){
 
 }
 
-    //Question 11 -- INCOMPLETE: can't determine if string are identical
+    //Question 11 -- INCOMPLETE: can't determine if arguments have equal precedence if the one has a capital
 
-/*Prepared assuming only alphabetical characters will be used.
+/*Prepared assuming only alphabetical characters will be used and prefixes hold precedence over the words they comprise
 Question doesn't specify precedence for non-alphabetical characters*/
 
 int my_strcomp(const char str1[], const char str2[]){
     int indexNum;
 
-    if(*str1 == *str2)
-        return 0;
+    for(indexNum = 0; str1[indexNum] != '\0'; indexNum++){
 
-    for(indexNum = 0; str1[indexNum] != '\0' && str2[indexNum] != '\0'; indexNum++){
+        if(str2[indexNum] == '\0')
+            return -1;
 
-        if(str1[indexNum] != str2[indexNum]){
-            return (str1[indexNum] >= 'a' ? str1[indexNum] - 'a' : str1[indexNum] - 'A') - (str2[indexNum] >= 'a' ? str2[indexNum] - 'a' : str2[indexNum] - 'A') > 0 ? -1 : 1;
-        }
-
+        else if(str1[indexNum] != str2[indexNum])
+            return (str1[indexNum] >= 'a' ? str1[indexNum] - 'a' + 'A' : str1[indexNum]) < (str2[indexNum] >= 'a' ? str2[indexNum] - 'a' + 'A' : str2[indexNum])? 1 : -1;
     }
 
-    return (str1[indexNum] >= 'a' ? str1[indexNum] - 'a' : str1[indexNum] - 'A') - (str2[indexNum] >= 'a' ? str2[indexNum] - 'a' : str2[indexNum] - 'A') > 0 ? -1 : 1;;
+    return str2[indexNum] == '\0' ? 0 : 1;
 
 }
 
