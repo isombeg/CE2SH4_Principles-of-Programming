@@ -1,4 +1,0 @@
-3
-1200 Isaac Newton
-4580 Alan Turing
-9000 Elvis Presley
