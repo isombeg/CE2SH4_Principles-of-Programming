@@ -55,8 +55,9 @@ int main(void){
     print_list(class_A, class_A_size);
 
     //testing withdraw
-    withdraw(1200, class_A, class_A_size);
+    withdraw(1200, class_A, &class_A_size);
     print_list(class_A, class_A_size);
+    withdraw(1900, class_A, &class_A_size);
 
     return 0;
 }
@@ -148,17 +149,14 @@ void print_list(student **list, int size){
 
 void withdraw(int idNo, student **list, int *sizePtr){
     int counter;
-    //printf("index: %d, size: %d\n", find(idNo, list, *sizePtr), *sizePtr);
-    for(int counter = 0; counter < *sizePtr; counter++){
 
-        if(list[counter] -> studentID == idNo){
-            for(counter += 1; counter < *sizePtr; counter++){
-                *(list[counter - 1]) = *(list[counter]);
-            }
-            break;
-        }
+    if(find(idNo, list, *sizePtr) != -1){
+        for(int i = find(idNo, list, *sizePtr) + 1; i < *sizePtr; i++)
+            *(list[i - 1]) = *(list[i]);
 
+        free(list[--(*sizePtr)]);
     }
 
-    free(list[--*sizePtr]);
+    else printf("Student not found");
+
 }
