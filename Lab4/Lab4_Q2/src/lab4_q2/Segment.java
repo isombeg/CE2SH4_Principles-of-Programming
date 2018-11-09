@@ -71,6 +71,6 @@ public class Segment {
 
     //returns a string representation of the segment line
     public String toString(){
-        return "This segment has ends with coordinates (" + this.getX1() + ", " + this.getY1() + ") and (" + this.getX2() + ", " + this.getY2();
+        return "(" + this.getX1() + ", " + this.getY1() + "), (" + this.getX2() + ", " + this.getY2() + ")";
     }
 }//end class SEgment
