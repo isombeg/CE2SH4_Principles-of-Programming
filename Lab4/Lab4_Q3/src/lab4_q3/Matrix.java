@@ -117,8 +117,8 @@ public Matrix subMatrix(int i, int j) throws ArithmeticException
     if  ( i >= 0 && i < rowsNum && j >= 0 && j < colsNum) {
         int[][] newTable = new int[i][j];
         
-        for(int row = 0; row < rowsNum; row++){
-            for(int col = 0; col < colsNum; col++)
+        for(int row = 0; row < i; row++){
+            for(int col = 0; col < j; col++)
                 newTable[i][j] = matrixData[i][j];
         }
         
