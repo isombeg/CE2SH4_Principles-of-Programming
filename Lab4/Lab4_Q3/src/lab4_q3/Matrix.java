@@ -115,11 +115,11 @@ public Matrix subMatrix(int i, int j) throws ArithmeticException
     	    this Matrix. */
     
     if  ( i >= 0 && i < rowsNum && j >= 0 && j < colsNum) {
-        int[][] newTable = new int[i][j];
+        int[][] newTable = new int[++i][++j];
         
         for(int row = 0; row < i; row++){
             for(int col = 0; col < j; col++)
-                newTable[i][j] = matrixData[i][j];
+                newTable[row][col] = matrixData[row][col];
         }
         
         return new Matrix(newTable);
@@ -151,8 +151,8 @@ public Matrix subMatrix(int i, int j) throws ArithmeticException
         
         public boolean isUpperTr(){
             for(int row = 0; row < rowsNum; row++){
-                for(int col = 0; col < colsNum; col++){
-                    if(col < row && matrixData[col][row] != 0) return false;
+                for(int col = 0; col < row; col++){
+                    if(matrixData[row][col] != 0) return false;
                 }
             }
             
