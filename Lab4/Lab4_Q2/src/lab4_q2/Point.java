@@ -34,3 +34,4 @@ public class Point {
         return "The point has the coordinates x=" + this.x + " and y=" + this.y;
     }
 }
+//
