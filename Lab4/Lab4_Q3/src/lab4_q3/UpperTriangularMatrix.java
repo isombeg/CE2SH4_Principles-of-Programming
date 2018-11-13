@@ -20,13 +20,13 @@ public class UpperTriangularMatrix {
     
     public UpperTriangularMatrix(Matrix upTriM) throws IllegalArgumentException {
         
-        if(upTriM.isUpperTr()){
+        if(upTriM.isUpperTr() && upTriM.getRowDim() == upTriM.getColDim()){
             size = upTriM.getRowDim();
             matrixData = new int[size * size];
             
             for(int rowNum = 0; rowNum < size; rowNum++){
                 for(int colNum = 0; colNum < size; colNum++)
-                    matrixData[colNum * size * rowNum] = upTriM.getElement(rowNum, colNum);
+                    matrixData[colNum + size * rowNum] = upTriM.getElement(rowNum, colNum);
             }
         }
         
@@ -68,8 +68,10 @@ public class UpperTriangularMatrix {
     
     public void print1DArray(){
         for(int rowNum = 0; rowNum < size; rowNum++){
-            for(int colNum = rowNum; colNum < size; rowNum++) System.out.println(matrixData[colNum + size * rowNum] + "  ");
+            for(int colNum = rowNum; colNum < size; colNum++)
+                System.out.print(matrixData[colNum + size * rowNum] + "  ");
         }
+        System.out.println("");
     }
     
     public String toString(){
