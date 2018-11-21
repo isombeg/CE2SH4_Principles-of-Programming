@@ -8,7 +8,7 @@ package lab5;
 /**
  *
  * @author TheYo
- *//
+ */
 public class SLLNode {
     int value;
     SLLNode next;
@@ -16,3 +16,4 @@ public class SLLNode {
         value = i; next = n;
     }
 }
+//
