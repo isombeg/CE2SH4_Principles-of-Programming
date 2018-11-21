@@ -1,6 +1,6 @@
 package lab5;
 
-/
+//
 //@author Huihui Wu
 
 public class Lab5{   
