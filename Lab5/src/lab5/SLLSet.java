@@ -33,6 +33,8 @@ public class SLLSet {
     }
     
     public SLLSet copy(){
+        if(size == 0) return new SLLSet();
+        
         int[] newSetArr = new int[size];
         SLLNode p = head;
         
@@ -44,30 +46,29 @@ public class SLLSet {
     
     public boolean isIn(int v){
         
-        for(SLLNode p = head; p != null && !(p.value > v); p = p.next)
-            if(p.value == v) return true;
+        if(size == 0) return false;
         
-        return false;
+        else{
+            for(SLLNode p = head; p != null && !(p.value > v); p = p.next)
+                if(p.value == v) return true;
+        
+            return false;
+        }
     }
     
     public void add(int v){
 
-        if(head == null){
-            head = new SLLNode(v, null);
+        if(head == null || v < head.value){
+            head = new SLLNode(v, head);
             size++;
         }
         
         else if(isIn(v)) return;
         
-        else if(v < head.value){
-            head = new SLLNode(v, head);
-            size++;
-        }
-        
         else{
             
-            SLLNode p = head;
-            for(p = p; p.next != null; p = p.next){
+            SLLNode p;
+            for(p = head; p.next != null; p = p.next){
                 if(p.next.value > v){
                     p.next = new SLLNode(v, p.next);
                     size++;
@@ -84,25 +85,26 @@ public class SLLSet {
     
     public void remove(int v){
         
-        if(head.value == v){
-            SLLNode p = head;
-            head = head.next;
-            p = null;
-            size--;
-        }
-        
         if(isIn(v)){
-            SLLNode p = head;
             
-            for(p = p; p.next != null; p = p.next)
+            if(head.value == v){
+                SLLNode p = head;
+                head = head.next;
+                p = null;
+                size--;
+            }
+            
+            else{
+                SLLNode p = head;
+            
+                for(p = p; p.next != null; p = p.next)
                 
-                if(p.next.value == v){
-                    p.next = p.next.next;
-                    size--;
-                    return;
-                }
-            
-           
+                    if(p.next.value == v){
+                        p.next = p.next.next;
+                        size--;
+                        return;
+                    }
+            }
             
         }
     }
@@ -138,6 +140,16 @@ public class SLLSet {
         for(p = s.head; p != null; p = p.next)
             if(!(isIn(p.value))) rslt.add(p.value);
         
+        
+        return rslt;
+    }
+    
+    public static SLLSet union(SLLSet[] sArray){
+        SLLSet rslt = new SLLSet();
+        
+        for(int index = 0; index < sArray.length; index++){
+            rslt = rslt.union(sArray[index]);
+        }
         
         return rslt;
     }
